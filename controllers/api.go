@@ -13,7 +13,9 @@ func Test(c *gin.Context) {
 }
 
 func Postal(c *gin.Context) {
-	response, err := http.Get("https://geoapi.heartrails.com/api/json?method=searchByPostal&postal=5016121")
+	code := c.Query("postal_code")
+	url := "https://geoapi.heartrails.com/api/json?method=searchByPostal&postal=" + code
+	response, err := http.Get(url)
 	if err != nil || response.StatusCode != http.StatusOK {
 		c.Status(http.StatusServiceUnavailable)
 		return

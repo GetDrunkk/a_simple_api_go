@@ -10,7 +10,7 @@ func InitRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/", controllers.Test)
-	r.GET("/about", controllers.Postal)
+	r.GET("/address", controllers.Postal)
 
 	return r
 }
