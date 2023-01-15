@@ -18,15 +18,6 @@ type Return_data struct {
 	Tokyo_sta_distance float64 `json:"tokyo_sta_distance"`
 }
 
-type Logsingle struct {
-	Postal_code   int `json:"postal_code"`
-	Request_count int `json:"request_count"`
-}
-
-type Logs struct {
-	Access_logs []Logsingle `json:"access_logs"`
-}
-
 func Test(c *gin.Context) {
 	c.String(200, "Hello World")
 }
