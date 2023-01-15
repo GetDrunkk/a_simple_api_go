@@ -1,8 +1,8 @@
 package controllers
 
 import (
+	"a_simple_api_go/database"
 	"encoding/json"
-	"fmt"
 	"io"
 	"math"
 	"net/http"
@@ -16,6 +16,15 @@ type Return_data struct {
 	Hit_count          int     `json:"hit_count"`
 	Address            string  `json:"address"`
 	Tokyo_sta_distance float64 `json:"tokyo_sta_distance"`
+}
+
+type Logsingle struct {
+	Postal_code   int `json:"postal_code"`
+	Request_count int `json:"request_count"`
+}
+
+type Logs struct {
+	Access_logs []Logsingle `json:"access_logs"`
 }
 
 func Test(c *gin.Context) {
@@ -66,9 +75,8 @@ func Postal(c *gin.Context) {
 	re_data.Address = add_fin
 	re_data.Tokyo_sta_distance = float64(int64(dis*10+0.5)) / 10
 	//fmt.Print(re_data)
-	result, _ := json.Marshal(re_data)
-	fmt.Print(string(result))
-	c.JSON(200, string(result))
+	database.Insert(int_code)
+	c.JSON(200, re_data)
 }
 
 func Cal_dis(x, y float64) (d float64) {
@@ -102,4 +110,9 @@ func Take_address(x, y string) (res string) {
 		}
 		return
 	}
+}
+
+func Access_log(c *gin.Context) {
+	res := database.Read_log()
+	c.JSON(200, res)
 }
